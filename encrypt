@@ -24,8 +24,7 @@ def val(n,x,y,p):
     y1=y
     while(i<count):
         x1,y1=doub(n,x1,y1,p)
-        i+=1
-    print(x1,y1)        
+        i+=1    
     rem=n-(2**count)
     if rem==0:
         return x1,y1
@@ -43,4 +42,11 @@ def val(n,x,y,p):
         y3=(s*(x1-x3)-y1)%p
         return x3,y3
         
-print(val(7,5,1,17))        
+p1=5
+p2=7
+X1,Y1=val(p1,5,1,17)
+X2,Y2=val(p2,5,1,17)
+c1,d1=val(p1,X2,Y2,17)
+c2,d2=val(p2,X1,Y1,17)
+print(c1,d1)
+print(c2,d2)
