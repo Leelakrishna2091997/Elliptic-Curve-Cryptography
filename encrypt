@@ -1,0 +1,46 @@
+def gcd(a,b):
+    if(a==0):
+        return b
+    else:
+        return gcd(b%a,a)
+def doub(n,x,y,p):
+    a=(3*x*x+2)
+    b=2*y
+    g=gcd(a,b)
+    a=a/g
+    b=b/g
+    re=(b**(p-2))%p
+    re=re*a
+    s=re%p
+    x3=(s*s-2*x)%p
+    y3=(s*(x-x3)-y)%p
+    return x3,y3
+def val(n,x,y,p):
+    if(n==1):
+        return x,y
+    count=int(n**(1/2))
+    i=0
+    x1=x
+    y1=y
+    while(i<count):
+        x1,y1=doub(n,x1,y1,p)
+        i+=1
+    print(x1,y1)        
+    rem=n-(2**count)
+    if rem==0:
+        return x1,y1
+    else:
+        x2,y2=val(rem,x,y,p)
+        A=(y2-y1)
+        B=(x2-x1)
+        g=gcd(A,B)
+        A=A/g
+        B=B/g
+        res=(B**(p-2))%p
+        res=res*A
+        s=res%p
+        x3=((s*s)-x1-x2)%p
+        y3=(s*(x1-x3)-y1)%p
+        return x3,y3
+        
+print(val(7,5,1,17))        
