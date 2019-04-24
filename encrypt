@@ -67,3 +67,4 @@ c1,d1=val(p1,X2,Y2,17)
 c2,d2=val(p2,X1,Y1,17)
 print("Generated key at X",c1,d1)
 print("Generated key at Y",c2,d2)
+
