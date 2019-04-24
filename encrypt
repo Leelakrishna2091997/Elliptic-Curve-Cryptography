@@ -1,12 +1,16 @@
-def gcd(a,b):
+def gcd(a,b):   # GCD of numbers a,b
     if(a==0):
         return b
     else:
         return gcd(b%a,a)
-def doub(n,x,y,p):
+        
+        
+        
+def doub(n,x,y,p):  # Doubling the point (x,y) for n times
+    
     a=(3*x*x+2)
     b=2*y
-    g=gcd(a,b)
+    g=gcd(a,b) # GCD of (a,b) to find the modular multiplicative inverse.
     a=a/g
     b=b/g
     re=(b**(p-2))%p
@@ -15,38 +19,51 @@ def doub(n,x,y,p):
     x3=(s*s-2*x)%p
     y3=(s*(x-x3)-y)%p
     return x3,y3
+    
+    
+    
 def val(n,x,y,p):
+    
+    # Finding the value of nA where n is the private key of the messenger and A (x,y) is the public key. 
+    
     if(n==1):
         return x,y
-    count=int(n**(1/2))
+    count=int(n**(1/2)) #Finding the number of Doublings to perform.
     i=0
     x1=x
     y1=y
-    while(i<count):
+    
+    while(i<count): # Doubling the point for count times.
         x1,y1=doub(n,x1,y1,p)
         i+=1    
-    rem=n-(2**count)
+        
+    rem=n-(2**count) # Checking for the remaining difference.
+    
     if rem==0:
         return x1,y1
+        
     else:
-        x2,y2=val(rem,x,y,p)
+        x2,y2=val(rem,x,y,p) # Finding value of remaining count of point.
         A=(y2-y1)
         B=(x2-x1)
         g=gcd(A,B)
         A=A/g
         B=B/g
-        res=(B**(p-2))%p
+        res=(B**(p-2))%p    # Finding modulo inverse of the denominator with p. 
         res=res*A
         s=res%p
         x3=((s*s)-x1-x2)%p
         y3=(s*(x1-x3)-y1)%p
-        return x3,y3
-        
-p1=5
-p2=7
+        return x3,y3        # return the final point.
+ 
+ 
+print("Provide the private key of X")
+p1=int(input())
+print("Provide the private key of Y")
+p2=int(input())
 X1,Y1=val(p1,5,1,17)
 X2,Y2=val(p2,5,1,17)
 c1,d1=val(p1,X2,Y2,17)
 c2,d2=val(p2,X1,Y1,17)
-print(c1,d1)
-print(c2,d2)
+print("Generated key at X",c1,d1)
+print("Generated key at Y",c2,d2)
